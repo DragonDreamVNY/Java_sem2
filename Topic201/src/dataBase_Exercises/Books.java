@@ -63,14 +63,16 @@ ResultSet resultSet;
     
     public void input(){
         try{
-            String authorID = resultSet.getObject(1).toString();
+            String authorID = resultSet.getObject(1).toString(); 
             String firstName = resultSet.getObject(2).toString();
             String lastName = resultSet.getObject(3).toString();
         }
         catch(SQLException sqlex){
             System.out.println("input to String wrong");
         }
-    }
+    }// end input
+    
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,6 +108,11 @@ ResultSet resultSet;
         });
 
         nextBtn.setText("Next >>");
+        nextBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nextBtnActionPerformed(evt);
+            }
+        });
 
         prevBtn.setText("<< Previous");
 
@@ -217,7 +224,11 @@ ResultSet resultSet;
     private void firstBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstBtnActionPerformed
         // FIRST Button code goes here
         try{
-            resultSet.getObject(1);
+            //input();
+            
+            authorIDTextField.setText(authorID);
+            
+            
         }//end try
         
         catch(Exception sqlex) {
@@ -244,6 +255,18 @@ ResultSet resultSet;
 	} //end catch
         
     }//GEN-LAST:event_authorIDTextFieldActionPerformed
+
+    private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
+        // Next button goes here
+        try{
+            resultSet.next();
+            input();
+        }
+        catch(Exception sqlex){
+            System.out.println("next button is borked");
+        }
+        
+    }//GEN-LAST:event_nextBtnActionPerformed
 
     /**
      * @param args the command line arguments
