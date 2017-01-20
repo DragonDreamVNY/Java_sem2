@@ -13,14 +13,14 @@ import javax.swing.JOptionPane;
  * @author k00223361
  * Display Books with JFrame interface
  */
-public class Books extends javax.swing.JFrame {
+public class UpdateBooks extends javax.swing.JFrame {
 
 ResultSet resultSet;
 Connection connection; 
 Statement statement;
     
     /**Creates new form Books*/
-    public Books() {
+    public UpdateBooks() {
         initComponents();
     
         int number =0;
@@ -247,6 +247,9 @@ Statement statement;
             if (resultSet.first() ){
                 input();
             }
+            else{
+                resultSet.first();
+            }
         }
         
         catch(Exception sqlex) {
@@ -347,20 +350,21 @@ Statement statement;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Books.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateBooks.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Books.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateBooks.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Books.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateBooks.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Books.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateBooks.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Books().setVisible(true);
+                new UpdateBooks().setVisible(true);
             }
         });
     }
