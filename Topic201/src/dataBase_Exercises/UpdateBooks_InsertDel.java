@@ -127,7 +127,6 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
             }
         });
 
-        authorIDTextField.setEditable(false);
         authorIDTextField.setText("ID");
         authorIDTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,10 +134,8 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
             }
         });
 
-        firstNameTextField.setEditable(false);
         firstNameTextField.setText("First Name..");
 
-        lastNameTextField.setEditable(false);
         lastNameTextField.setText("Last Name..");
         lastNameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -266,6 +263,9 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
         try{
             if (resultSet.first() ){
                 input();
+                firstBtn.setEnabled(false);
+                prevBtn.setEnabled(false);
+                lastBtn.setEnabled(true);
             }
             else{
                 resultSet.first();
@@ -290,8 +290,7 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
             authorIDTextField.addMouseListener(new MouseAdapter(){
             //authorIDTextField.setText()
             public void mouseReleased(MouseEvent e){
-            
-            // do stuff}
+                authorIDTextField.setEditable(true);
             }//end mouse RELEASED event
             
 
@@ -303,6 +302,7 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
         // Next button goes here
         try{
             if(resultSet.next() ){ //if checks that there are records in the table
+                prevBtn.setEnabled(true);
                 input();
             }
             else{
@@ -334,6 +334,10 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
         try{
             if (resultSet.last() ){
                 input();
+                lastBtn.setEnabled(false);
+                nextBtn.setEnabled(false);
+                firstBtn.setEnabled(true);
+                prevBtn.setEnabled(true);
             }
         }
         catch(Exception sqlex){
@@ -346,6 +350,7 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
         // Previous Button code here:
         try{
             if (resultSet.previous() ){
+                nextBtn.setEnabled(true);
                 input();
             }
             else{
