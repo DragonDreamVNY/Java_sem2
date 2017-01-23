@@ -1,5 +1,8 @@
 package dataBase_Exercises;
 
+import java.awt.TextField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,12 +18,12 @@ import javax.swing.JOptionPane;
  * Display Books with JFrame interface
  */
 public class UpdateBooks_InsertDel extends javax.swing.JFrame {
-
-ResultSet resultSet;
-Connection connection; 
-Statement statement;
+    /*some global variables*/
+    ResultSet resultSet;
+    Connection connection; 
+    Statement statement;
     
-    /**Creates new form Books*/
+    
     public UpdateBooks_InsertDel() {
         initComponents();
     
@@ -32,65 +35,9 @@ Statement statement;
 
             statement = connection.createStatement();
             
-            resultSet = statement.executeQuery("SELECT * FROM authors");
-            
-            /* Insert new data */
-            /*
-            String authInput = JOptionPane.showInputDialog(null, "please enter your AuthorID");
-            int authNewID = Integer.parseInt(authInput);
-            String firstNameInput = JOptionPane.showInputDialog(null, "please enter your first name");
-            String lastNameInput = JOptionPane.showInputDialog(null, "please enter your last name");
-            String yborn = JOptionPane.showInputDialog(null, "please enter your year of birth");
-            int yearBorn = Integer.parseInt(yborn);
-              */
-            /* 
-            String insertSQL = "INSERT INTO 'authors'(AuthorID, FirstName, LastName, YearBorn)VALUES ('" + authInput + "', '" + "'" + firstNameInput + "', '" + lastNameInput + "' " + ",'" + born)";
-            */
-            /*
-            String exInsert = "INSERT INTO `authors`(AuthorID, FirstName, LastName, YearBorn) VALUES (?, ?, ?, ?)";
-            PreparedStatement pstmt= connection.prepareStatement(exInsert);
-
-            pstmt.setInt(1,authNewID);
-            pstmt.setString(2,firstNameInput);
-            pstmt.setString(3,lastNameInput);
-            pstmt.setInt(3, yearBorn);
-
-            int rowCount = statement.executeUpdate(exInsert); //this gets back the integer number of 'how many rows are affected' by the Statement
-            
-            textArea.setText(rowCount + " row inserted\n");
-            */
             String query = "SELECT * FROM authors";  
             resultSet = statement.executeQuery(query);
-
-            String results="";
-
-            ResultSetMetaData metaData =  resultSet.getMetaData();
-            /*
-            int numberOfColumns = metaData.getColumnCount();
-
-            for (int i =1; i < numberOfColumns; i++) {
-                              results += metaData.getColumnName(i) + "\t";
-            }
-
-           results +="\n";
-
-           while(resultSet.next()) {
-              for (int i=1;  i < numberOfColumns; i++){
-                  results +=resultSet.getObject(i) + "\t";
-              }//end for
-
-              results+= "\n";
-            }
-            */ 
-          /*
-            ResultSetMetaData metaData =  resultSet.getMetaData();
-            int numberOfColumns = metaData.getColumnCount();
-            */ 
-          
-            if (resultSet.next()){
-                input();
-            }
-            
+            System.out.println("from authors Table");
         }//end try
         catch(SQLException sqlex) {
             JOptionPane.showMessageDialog(null, sqlex.toString());
@@ -98,10 +45,8 @@ Statement statement;
             System.exit(0);
         }
         
-        
-    
-    
-    }
+
+    }//end 'UpdateBooks_InsertDel' class
     
     private void input(){
         try{
@@ -113,7 +58,7 @@ Statement statement;
             firstNameTextField.setText(firstName);
             lastNameTextField.setText(lastName);
         } catch (SQLException sqlex) {
-            System.out.println("input to String wrong");
+            System.out.println("input to String is wrong \nCouldn't set textfields");
         } //end try catch
     }// end input
     
@@ -139,7 +84,6 @@ Statement statement;
         authorLabel = new javax.swing.JLabel();
         firstNameLabel = new javax.swing.JLabel();
         lastNameLabel = new javax.swing.JLabel();
-        topLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textArea = new javax.swing.JTextArea();
         del_Btn = new javax.swing.JButton();
@@ -183,6 +127,7 @@ Statement statement;
             }
         });
 
+        authorIDTextField.setEditable(false);
         authorIDTextField.setText("ID");
         authorIDTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -190,8 +135,10 @@ Statement statement;
             }
         });
 
+        firstNameTextField.setEditable(false);
         firstNameTextField.setText("First Name..");
 
+        lastNameTextField.setEditable(false);
         lastNameTextField.setText("Last Name..");
         lastNameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,8 +151,6 @@ Statement statement;
         firstNameLabel.setText("First Name");
 
         lastNameLabel.setText("Last Name");
-
-        topLabel.setText("JFrame for displaying records from database");
 
         textArea.setColumns(20);
         textArea.setRows(5);
@@ -242,53 +187,44 @@ Statement statement;
                 .addGap(45, 45, 45))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(firstNameLabel)
-                            .addComponent(authorLabel)
-                            .addComponent(lastNameLabel))
-                        .addGap(61, 61, 61))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(87, 87, 87)
-                            .addComponent(firstBtn))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(25, 25, 25)
-                            .addComponent(topLabel))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(prevBtn)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(nextBtn))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(93, 93, 93)
-                                    .addComponent(lastBtn)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                            .addComponent(ins_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(upd_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
+                        .addGap(87, 87, 87)
+                        .addComponent(firstBtn))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(authorIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 3, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(del_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(exitBtn)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(prevBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nextBtn))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(93, 93, 93)
+                                .addComponent(lastBtn)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                        .addComponent(ins_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(upd_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(del_Btn, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(exitBtn)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(136, 136, 136)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(firstNameLabel)
+                    .addComponent(authorLabel)
+                    .addComponent(lastNameLabel))
+                .addGap(108, 108, 108)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(firstNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(authorIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(topLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(authorIDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(authorLabel))
@@ -334,12 +270,12 @@ Statement statement;
             else{
                 resultSet.first();
             }
-        }
+        }//end try
         
         catch(Exception sqlex) {
             System.out.println("First Button is borked");
             System.exit(0);
-	} //end catch
+	}//end catch
         
     }//GEN-LAST:event_firstBtnActionPerformed
 
@@ -349,15 +285,18 @@ Statement statement;
 
     private void authorIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorIDTextFieldActionPerformed
         // AuthorID textfield code goes here
-        try{
-            //authorIDTextField.setText()
-        }
-        catch(Exception sqlex) {
-            JOptionPane.showMessageDialog(null, sqlex.toString());
-            System.out.println("Author ID is borked");
-            System.exit(0);
-	} //end catch
         
+            
+            authorIDTextField.addMouseListener(new MouseAdapter(){
+            //authorIDTextField.setText()
+            public void mouseReleased(MouseEvent e){
+            
+            // do stuff}
+            }//end mouse RELEASED event
+            
+
+            
+        });//end Mouse Adapter
     }//GEN-LAST:event_authorIDTextFieldActionPerformed
 
     private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
@@ -368,6 +307,7 @@ Statement statement;
             }
             else{
                 resultSet.last();
+                System.out.println("last");
             }
         }
         catch(Exception sqlex){
@@ -378,10 +318,11 @@ Statement statement;
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
         // TODO add your handling code here:
-        try{statement.close();
-        connection.close();
-        System.out.println("connection closed \nExiting");
-        System.exit(0);
+        try{
+            statement.close();
+            connection.close();
+            System.out.println("connection closed \nExiting");
+            System.exit(0);
         }
         catch(SQLException sqlex) {
             System.out.println("exit is wrong");
@@ -409,6 +350,7 @@ Statement statement;
             }
             else{
                 resultSet.first();
+                System.out.println("first");
             }
         }
         catch(Exception sqlex){
@@ -422,11 +364,72 @@ Statement statement;
     }//GEN-LAST:event_del_BtnActionPerformed
 
     private void upd_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upd_BtnActionPerformed
-        // TODO add your handling code here:
+        // UPDATE BUTTON code here:
+        try{
+            /* Insert new data from user inputs*/
+            String authInput = JOptionPane.showInputDialog(null, "please enter new AuthorID");
+            int authNewID = Integer.parseInt(authInput);
+            
+            String firstNameInput = JOptionPane.showInputDialog(null, "please enter your first name");
+            String lastNameInput = JOptionPane.showInputDialog(null, "please enter your last name");
+            
+            String ybornInput = JOptionPane.showInputDialog(null, "please enter your year of birth");
+            int nYearBorn = Integer.parseInt(ybornInput);
+                
+            String updatetSQL = "UPDATE authors SET AuthorID = ?, FirstName = ?, LastName = ?, YearBorn = ?";
+            PreparedStatement updateBooks= connection.prepareStatement(updatetSQL);
+
+            updateBooks.setInt(1, authNewID); //AuthorID
+            updateBooks.setString(2, firstNameInput); //FirstName
+            updateBooks.setString(3, lastNameInput); //LastName
+            updateBooks.setInt(4, nYearBorn); //YearBorn
+
+            int rowCount = statement.executeUpdate(updatetSQL); 
+            System.out.println(rowCount + " row inserted\n");
+            
+            resultSet = updateBooks.executeQuery();
+            
+        }//end try
+        catch(SQLException sqlex){
+            System.out.println("borked the update");
+        }// end catch
+        
+        
     }//GEN-LAST:event_upd_BtnActionPerformed
 
     private void ins_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ins_BtnActionPerformed
-        // TODO add your handling code here:
+        // INSERT CODE here... no really:
+        
+        try{
+            /* Insert new data from user inputs*/
+            String authInput = JOptionPane.showInputDialog(null, "please enter your AuthorID");
+            int authNewID = Integer.parseInt(authInput);
+            
+            String firstNameInput = JOptionPane.showInputDialog(null, "please enter your first name");
+            String lastNameInput = JOptionPane.showInputDialog(null, "please enter your last name");
+            
+            String ybornInput = JOptionPane.showInputDialog(null, "please enter your year of birth");
+            int nYearBorn = Integer.parseInt(ybornInput);
+                
+            String dataInsert = "INSERT INTO authors (AuthorID, FirstName, LastName, YearBorn) VALUES(?,?,?,?)";
+            PreparedStatement pstmt= connection.prepareStatement(dataInsert);
+
+            pstmt.setInt(1, authNewID); //AuthorID
+            pstmt.setString(2, firstNameInput); //FirstName
+            pstmt.setString(3, lastNameInput); //LastName
+            pstmt.setInt(4, nYearBorn); //YearBorn
+            
+            resultSet = pstmt.executeQuery();
+            
+            //this gets back the integer number of 'how many rows are affected' by the Statement
+            int rowCount = statement.executeUpdate(dataInsert); 
+            System.out.println(rowCount + " row inserted\n");
+            
+            
+        }//end try
+        catch(SQLException sqlex){
+            System.out.println("borked the insert");
+        }// end catch
     }//GEN-LAST:event_ins_BtnActionPerformed
 
     /**
@@ -483,7 +486,6 @@ Statement statement;
     private javax.swing.JButton nextBtn;
     private javax.swing.JButton prevBtn;
     private javax.swing.JTextArea textArea;
-    private javax.swing.JLabel topLabel;
     private javax.swing.JButton upd_Btn;
     // End of variables declaration//GEN-END:variables
 }
