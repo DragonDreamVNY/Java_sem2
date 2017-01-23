@@ -128,6 +128,12 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
         });
 
         authorIDTextField.setText("ID");
+        authorIDTextField.setEnabled(false);
+        authorIDTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                authorIDTextFieldMouseClicked(evt);
+            }
+        });
         authorIDTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 authorIDTextFieldActionPerformed(evt);
@@ -135,8 +141,20 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
         });
 
         firstNameTextField.setText("First Name..");
+        firstNameTextField.setEnabled(false);
+        firstNameTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                firstNameTextFieldMouseClicked(evt);
+            }
+        });
 
+        lastNameTextField.setEditable(false);
         lastNameTextField.setText("Last Name..");
+        lastNameTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lastNameTextFieldMouseClicked(evt);
+            }
+        });
         lastNameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lastNameTextFieldActionPerformed(evt);
@@ -266,6 +284,7 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
                 firstBtn.setEnabled(false);
                 prevBtn.setEnabled(false);
                 lastBtn.setEnabled(true);
+                nextBtn.setEnabled(true);
             }
             else{
                 resultSet.first();
@@ -286,16 +305,6 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
     private void authorIDTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorIDTextFieldActionPerformed
         // AuthorID textfield code goes here
         
-            
-            authorIDTextField.addMouseListener(new MouseAdapter(){
-            //authorIDTextField.setText()
-            public void mouseReleased(MouseEvent e){
-                authorIDTextField.setEditable(true);
-            }//end mouse RELEASED event
-            
-
-            
-        });//end Mouse Adapter
     }//GEN-LAST:event_authorIDTextFieldActionPerformed
 
     private void nextBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextBtnActionPerformed
@@ -404,6 +413,7 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
 
     private void ins_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ins_BtnActionPerformed
         // INSERT CODE here... no really:
+        // http://alvinalexander.com/java/java-mysql-insert-example-preparedstatement 
         
         try{
             /* Insert new data from user inputs*/
@@ -416,7 +426,8 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
             String ybornInput = JOptionPane.showInputDialog(null, "please enter your year of birth");
             int nYearBorn = Integer.parseInt(ybornInput);
                 
-            String dataInsert = "INSERT INTO authors (AuthorID, FirstName, LastName, YearBorn) VALUES(?,?,?,?)";
+            String dataInsert = "INSERT INTO authors (AuthorID, FirstName, LastName, YearBorn) "
+                                    + "VALUES(?,?,?,?)";
             PreparedStatement pstmt= connection.prepareStatement(dataInsert);
 
             pstmt.setInt(1, authNewID); //AuthorID
@@ -424,18 +435,34 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
             pstmt.setString(3, lastNameInput); //LastName
             pstmt.setInt(4, nYearBorn); //YearBorn
             
-            resultSet = pstmt.executeQuery();
+            int recs = pstmt.executeUpdate();
             
             //this gets back the integer number of 'how many rows are affected' by the Statement
-            int rowCount = statement.executeUpdate(dataInsert); 
-            System.out.println(rowCount + " row inserted\n");
+        //    int rowCount = statement.executeUpdate(dataInsert); 
+            System.out.println(recs + " row inserted\n");
             
             
         }//end try
         catch(SQLException sqlex){
-            System.out.println("borked the insert");
+            System.err.println("borked the insert");
+            System.err.println(sqlex.getMessage());
         }// end catch
     }//GEN-LAST:event_ins_BtnActionPerformed
+
+    private void authorIDTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_authorIDTextFieldMouseClicked
+        authorIDTextField.setEnabled(true);
+        authorIDTextField.setText("");
+    }//GEN-LAST:event_authorIDTextFieldMouseClicked
+
+    private void firstNameTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_firstNameTextFieldMouseClicked
+        firstNameTextField.setEnabled(true);
+        firstNameTextField.setText("");
+    }//GEN-LAST:event_firstNameTextFieldMouseClicked
+
+    private void lastNameTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lastNameTextFieldMouseClicked
+        lastNameTextField.setEnabled(true);
+        lastNameTextField.setText("");
+    }//GEN-LAST:event_lastNameTextFieldMouseClicked
 
     /**
      * @param args the command line arguments
