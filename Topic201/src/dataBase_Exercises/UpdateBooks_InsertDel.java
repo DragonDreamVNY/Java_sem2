@@ -3,6 +3,7 @@ package dataBase_Exercises;
 import java.awt.TextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
+import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 
 /**
  *
@@ -327,7 +329,7 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
     }//GEN-LAST:event_nextBtnActionPerformed
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
-        // TODO add your handling code here:
+        // 'EXIT Stage Right!': Pink Panther
         try{
             statement.close();
             connection.close();
@@ -375,9 +377,88 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
     }//GEN-LAST:event_prevBtnActionPerformed
 
     private void del_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_del_BtnActionPerformed
-        // TODO add your handling code here:
+        // DELETE a RECORD
+        // http://docs.oracle.com/javase/tutorial/uiswing/components/dialog.html 
+        // 
+        
+     /*
+        JFrame frame = new JFrame("To delete or not delete");
+        
+        int response;
+        response = JOptionPane.showConfirmDialog(frame, "Are you sure you want to delete this record?","Warning", JOptionPane.QUESTION_MESSAGE);
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        JOptionPane.showConfirmDialog (null, "Are you sure you want to delete this record?","Warning", dialogButton);
+        String deletetSQL = "Delete from authors WHERE LastName = 'Watson'";
+    */
+     
+     // ref: http://www.java2s.com/Tutorial/Java/0240__Swing/Yesnocanceldialog.htm
+        try{ 
+            // 0=yes, 1=no, 2=cancel
+            int i = yesNoCancel("Are your sure you want to delete this property?");
+            System.out.println("ret : " + i);
+            if (i == 0){
+                System.out.println("You selected \'Yes\'");
+            } //end if CANCEL
+
+            if (i == 1){
+                System.out.println("You selected \'No\'");
+                JOptionPane.showMessageDialog(null, "Attention", "The record has not been deleted", JOptionPane.INFORMATION_MESSAGE);
+            } // end if NO DELETE
+
+            if (i == 2){
+                System.out.println("Cancelled");
+
+                // get what's currently in the textfields
+                String authorID = resultSet.getObject(1).toString();
+                int authIDcheck = Integer.parseInt(authorID); //authorID in 'authors' table is INT type       
+                System.out.println("authID (int) :" + authIDcheck);
+
+                String firstNameDel = firstNameTextField.getText();
+                System.out.println("first name to delete is... :" + firstNameDel);
+
+                String lastNameDel =  lastNameTextField.getText();
+                System.out.println("surname to delete is... :" + lastNameDel);
+
+                String delRecord = "DELETE FROM authors WHERE AuthorID = 'authIDcheck'";
+                PreparedStatement delstmt= connection.prepareStatement(delRecord);
+
+                int row = delstmt.executeUpdate();
+
+                System.out.println("\n__________________\nRecord is deleted in \'AUTHORS\' table!");
+                System.out.println(row + " rows affected\n");
+
+                JFrame frame = new JFrame("Yes");
+                JOptionPane.showMessageDialog(frame, "Record Successfully Deleted", "Delete Operation Complete", JOptionPane.INFORMATION_MESSAGE);
+
+                // display the new record and grey out the text fields again
+                input(); 
+                firstNameTextField.setEnabled(false);
+                lastNameTextField.setEnabled(false);
+            } //end if 2 - YES DELETE
+            else{ System.exit(0); }
+        
+        
+        }//end try
+        
+        catch(SQLException sqlex){
+            System.err.println("borked the delete");
+            System.err.println(sqlex.getMessage());
+            JFrame frame = new JFrame("JOptionPane showMessageDialog example");
+            JOptionPane.showMessageDialog(frame, "Error trying to update", "ERROR", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
+        }// end catch
+        
+        
+        
     }//GEN-LAST:event_del_BtnActionPerformed
 
+        // Yes-No-Cancel return type needs to be an int. (0 = Yes | 1 = No | 2 = Cancel) This might be reveresed on MacOS.
+        public static int yesNoCancel(String theMessage) {
+            int yesNoresult = JOptionPane.showConfirmDialog((Component) null, theMessage,"Confirm Deletion", JOptionPane.YES_NO_CANCEL_OPTION);
+            return yesNoresult;
+      }
+    
+    
     private void upd_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upd_BtnActionPerformed
         // UPDATE BUTTON code here:
         try{
