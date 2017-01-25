@@ -11,6 +11,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 
 /**
  *
@@ -37,7 +38,10 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
             
             String query = "SELECT * FROM authors";  
             resultSet = statement.executeQuery(query);
-            System.out.println("from authors Table");
+            
+            resultSet.first(); //position cursor at first record
+            input(); //set textfields
+            System.out.println("displaying from \'AUTHORS\' Table");
         }//end try
         catch(SQLException sqlex) {
             JOptionPane.showMessageDialog(null, sqlex.toString());
@@ -127,7 +131,6 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
             }
         });
 
-        authorIDTextField.setText("ID");
         authorIDTextField.setEnabled(false);
         authorIDTextField.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -140,7 +143,6 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
             }
         });
 
-        firstNameTextField.setText("First Name..");
         firstNameTextField.setEnabled(false);
         firstNameTextField.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -148,8 +150,7 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
             }
         });
 
-        lastNameTextField.setEditable(false);
-        lastNameTextField.setText("Last Name..");
+        lastNameTextField.setEnabled(false);
         lastNameTextField.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lastNameTextFieldMouseClicked(evt);
@@ -380,34 +381,36 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
     private void upd_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upd_BtnActionPerformed
         // UPDATE BUTTON code here:
         try{
-            /* Insert new data from user inputs*/
-            String authInput = JOptionPane.showInputDialog(null, "please enter new AuthorID");
-            int authNewID = Integer.parseInt(authInput);
+            // get what's currently in the textfields
+            String authIDcheck = resultSet.getObject(1).toString();            
+            System.out.println("authID :" + authIDcheck);
             
-            String firstNameInput = JOptionPane.showInputDialog(null, "please enter your first name");
-            String lastNameInput = JOptionPane.showInputDialog(null, "please enter your last name");
+            String firstNameUpdate = firstNameTextField.getText();
+            System.out.println("first name to update is... :" + firstNameUpdate);
             
-            String ybornInput = JOptionPane.showInputDialog(null, "please enter your year of birth");
-            int nYearBorn = Integer.parseInt(ybornInput);
-                
-            String updatetSQL = "UPDATE authors SET AuthorID = ?, FirstName = ?, LastName = ?, YearBorn = ?";
-            PreparedStatement updateBooks= connection.prepareStatement(updatetSQL);
-
-            updateBooks.setInt(1, authNewID); //AuthorID
-            updateBooks.setString(2, firstNameInput); //FirstName
-            updateBooks.setString(3, lastNameInput); //LastName
-            updateBooks.setInt(4, nYearBorn); //YearBorn
-
-            int rowCount = statement.executeUpdate(updatetSQL); 
-            System.out.println(rowCount + " row inserted\n");
+            String lastNameUpdate =  lastNameTextField.getText();
+            System.out.println("surname to update is... :" + lastNameUpdate);
+ 
+            String dataUpdate = "UPDATE authors SET FirstName = ?, LastName = ? "
+                                + "WHERE AuthorID = 'authIDcheck'";
+            PreparedStatement upstmt= connection.prepareStatement(dataUpdate);
+           
+            upstmt.setString(1, firstNameUpdate); //FirstName variable currently in textfield after edit
+            upstmt.setString(2, lastNameUpdate); //LastName
             
-            resultSet = updateBooks.executeQuery();
+            int recs = upstmt.executeUpdate();
+            
+            System.out.println("\n_________\nRecord is updated in \'Authors\' table!");
+            System.out.println(recs + " row inserted\n");
+            
             
         }//end try
         catch(SQLException sqlex){
-            System.out.println("borked the update");
+            System.err.println("borked the update");
+            System.err.println(sqlex.getMessage());
+             JFrame frame = new JFrame("JOptionPane showMessageDialog example");
+            JOptionPane.showMessageDialog(frame, "Error on update", "problem", JOptionPane.ERROR_MESSAGE);
         }// end catch
-        
         
     }//GEN-LAST:event_upd_BtnActionPerformed
 
@@ -450,8 +453,8 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
     }//GEN-LAST:event_ins_BtnActionPerformed
 
     private void authorIDTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_authorIDTextFieldMouseClicked
-        authorIDTextField.setEnabled(true);
-        authorIDTextField.setText("");
+        //authorIDTextField.setEnabled(true);
+        //authorIDTextField.setText("");
     }//GEN-LAST:event_authorIDTextFieldMouseClicked
 
     private void firstNameTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_firstNameTextFieldMouseClicked
