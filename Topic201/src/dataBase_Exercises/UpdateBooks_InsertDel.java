@@ -382,8 +382,9 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
         // UPDATE BUTTON code here:
         try{
             // get what's currently in the textfields
-            String authIDcheck = resultSet.getObject(1).toString();            
-            System.out.println("authID :" + authIDcheck);
+            String authorID = resultSet.getObject(1).toString();
+            int authIDcheck = Integer.parseInt(authorID); //authorID in 'authors' table is INT type       
+            System.out.println("authID (int) :" + authIDcheck);
             
             String firstNameUpdate = firstNameTextField.getText();
             System.out.println("first name to update is... :" + firstNameUpdate);
@@ -391,8 +392,7 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
             String lastNameUpdate =  lastNameTextField.getText();
             System.out.println("surname to update is... :" + lastNameUpdate);
  
-            String dataUpdate = "UPDATE authors SET FirstName = ?, LastName = ? "
-                                + "WHERE AuthorID = 'authIDcheck'";
+            String dataUpdate = "UPDATE authors SET FirstName = ?, LastName = ? WHERE AuthorID = 'authIDcheck'";
             PreparedStatement upstmt= connection.prepareStatement(dataUpdate);
            
             upstmt.setString(1, firstNameUpdate); //FirstName variable currently in textfield after edit
@@ -400,16 +400,23 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
             
             int recs = upstmt.executeUpdate();
             
-            System.out.println("\n_________\nRecord is updated in \'Authors\' table!");
-            System.out.println(recs + " row inserted\n");
+            System.out.println("\n__________________\nRecord is updated in \'AUTHORS\' table!");
+            System.out.println(recs + " row affected\n");
             
+            JFrame frame = new JFrame("Yes");
+            JOptionPane.showMessageDialog(frame, "Record Successfully updated", "Update Complete", JOptionPane.INFORMATION_MESSAGE);
+            
+            // display the new record and grey out the text fields again
+            input(); 
+            firstNameTextField.setEnabled(false);
+            lastNameTextField.setEnabled(false);
             
         }//end try
         catch(SQLException sqlex){
             System.err.println("borked the update");
             System.err.println(sqlex.getMessage());
-             JFrame frame = new JFrame("JOptionPane showMessageDialog example");
-            JOptionPane.showMessageDialog(frame, "Error on update", "problem", JOptionPane.ERROR_MESSAGE);
+            JFrame frame = new JFrame("JOptionPane showMessageDialog example");
+            JOptionPane.showMessageDialog(frame, "Error trying to update", "ERROR", JOptionPane.ERROR_MESSAGE);
         }// end catch
         
     }//GEN-LAST:event_upd_BtnActionPerformed
