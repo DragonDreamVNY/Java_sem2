@@ -392,6 +392,7 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
     */
      
      // ref: http://www.java2s.com/Tutorial/Java/0240__Swing/Yesnocanceldialog.htm
+     // see Alan's NavigateRecords.java solution02 for .NO_OPTION version.
         try{ 
             // 0=yes, 1=no, 2=cancel
             int i = yesNoCancel("Are your sure you want to delete this property?");
@@ -447,16 +448,13 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(frame, "Error trying to update", "ERROR", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }// end catch
-        
-        
-        
     }//GEN-LAST:event_del_BtnActionPerformed
 
-        // Yes-No-Cancel return type needs to be an int. (0 = Yes | 1 = No | 2 = Cancel) This might be reveresed on MacOS.
-        public static int yesNoCancel(String theMessage) {
-            int yesNoresult = JOptionPane.showConfirmDialog((Component) null, theMessage,"Confirm Deletion", JOptionPane.YES_NO_CANCEL_OPTION);
-            return yesNoresult;
-      }
+    // Yes-No-Cancel return type needs to be an int. (0 = Yes | 1 = No | 2 = Cancel) YES and CANCEL might be reveresed on MacOS.
+    public static int yesNoCancel(String theMessage) {
+        int yesNoresult = JOptionPane.showConfirmDialog((Component) null, theMessage,"Confirm Deletion", JOptionPane.YES_NO_CANCEL_OPTION);
+        return yesNoresult;
+    }
     
     
     private void upd_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upd_BtnActionPerformed
