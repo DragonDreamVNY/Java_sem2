@@ -45,9 +45,9 @@ public class MainFrame extends javax.swing.JFrame {
             
             //load Agents
             while(rowSet.next()) {
-                String agentID = rowSet.getString(1); 
+                String agentID = rowSet.getString(1);  //gets the value from agentID column 
                 System.out.print("Agent added - ID : " + agentID + "\t");
-                String comboAgents = rowSet.getString(2); 
+                String comboAgents = rowSet.getString(2); //gets the vale or name from agent's name column
                 System.out.print("Name : " + comboAgents + "\n");
                 
                 agentsComboBox.addItem(comboAgents);
@@ -171,7 +171,7 @@ public class MainFrame extends javax.swing.JFrame {
                                 "INNER JOIN\n" +
                                 "agents\n" +
                                 "WHERE properties.agentid = agents.agentId\n" +
-                                "ORDER BY agents.agentId;";
+                                "ORDER BY properties.city;";
             rowSet.setCommand(printQuery);
             rowSet.execute(); 
             System.out.println("displaying from \'AGENTS\' & \'PROPERTIES\' Tables\n");     
@@ -182,9 +182,9 @@ public class MainFrame extends javax.swing.JFrame {
                 rowSet.getString(2) + "\t" +    //output  Street
                 rowSet.getString(3) + "\t" +    //output  City
                 rowSet.getString(4)  + "\t\t" +    //output  Description        
-                "€" + rowSet.getString(5) + "\t" +    //output  Price
+                "€" + rowSet.getInt(5) + "\t" +    //output  Price
                 rowSet.getString(6) + "\t" +    //output  Agent_Name
-                rowSet.getString(7)  + "\n";    //output  Agent_Phone         
+                rowSet.getInt(7)  + "\n";    //output  Agent_Phone         
                         
                 String agentID = rowSet.getString(1); 
                 System.out.print("Agent added - ID : " + agentID + "\t");
@@ -282,6 +282,46 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void ins_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ins_BtnActionPerformed
         // INSERT BUTTON:
+        try{
+            String propertiesUpdateQuery = "SELECT * FROM properties\n" +
+                                                "ORDER BY properties.id;";
+            rowSet.setCommand(propertiesUpdateQuery);
+            rowSet.execute(); 
+            System.out.println("loaded from \'PROPERTIES\' Table\n"); 
+            
+            String insStreet = JOptionPane.showInputDialog("enter Street"); //litrealty.properties.street
+            String insCity = JOptionPane.showInputDialog("enter City"); //litrealty.properties.city
+            String insDescription = JOptionPane.showInputDialog("enter Description"); //litrealty.properties.description
+            String inp_NumBedrooms = JOptionPane.showInputDialog("enter number of bedrooms"); //litrealty.properties.bedroms
+                int insNumBedrooms = Integer.parseInt(inp_NumBedrooms); 
+            String inp_NumBathrooms = JOptionPane.showInputDialog("enter number of bathrooms");
+                double insNumBathrooms = Double.parseDouble(inp_NumBathrooms); //litrealty.properties.street
+            String inp_AgentID= JOptionPane.showInputDialog("enter ID number of Agent responsible for selling the property"); //litrealty.preoprties.agentId
+                int insAgentID = Integer.parseInt(inp_AgentID);
+            String inp_NewPrice = JOptionPane.showInputDialog("enter Price"); //litrealty.properties.street
+                double insNewPrice = Double.parseDouble(inp_NewPrice);
+            
+            rowSet.moveToInsertRow(); //moves to end of the Table to insert a new record
+            
+            rowSet.updateString("street", insStreet);
+            rowSet.updateString("city", insCity);
+            rowSet.updateString("description", insDescription);
+            rowSet.updateInt("bedrooms", insNumBedrooms);
+            rowSet.updateDouble("bathrooms", insNumBathrooms);
+            rowSet.updateInt("agentId", insAgentID);
+            rowSet.updateDouble("price", insNewPrice);
+
+            rowSet.insertRow(); //inserts new empty row
+
+            JOptionPane.showMessageDialog(null, "Record Inserted");
+            
+             
+        } //end try
+        catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.toString());
+            System.err.println("Error inserting to Properties Table");
+            System.exit(0);
+        }//end catch
     }//GEN-LAST:event_ins_BtnActionPerformed
 
     /**
