@@ -308,6 +308,7 @@ public final class NavigateRecords extends javax.swing.JFrame {
                
                JOptionPane.showMessageDialog(null,"The record has been deleted from the database");
                
+               //check if there is a next record, otherwise go back to the very first one.
                if (!resultSet.next())
                    resultSet.first();
                            
@@ -325,11 +326,11 @@ public final class NavigateRecords extends javax.swing.JFrame {
 
     private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertButtonActionPerformed
     
-        setVisible(false);
+        setVisible(false); //hides the current frame (NavigateRecords frame)
         
         InsertForm insertForm = new InsertForm(this, resultSet);
         
-        insertForm.setVisible(true);
+        insertForm.setVisible(true); 
    
     }//GEN-LAST:event_insertButtonActionPerformed
 

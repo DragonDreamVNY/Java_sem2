@@ -16,7 +16,7 @@ public class InsertForm extends javax.swing.JFrame {
     
     public InsertForm(JFrame mainFrame, ResultSet resultSet) {
 
-        this.mainFrame = mainFrame;
+        this.mainFrame = mainFrame; //passed a reference to mainFrame
         this.resultSet = resultSet;
         
         //setup GUI
@@ -101,7 +101,7 @@ public class InsertForm extends javax.swing.JFrame {
              
           JOptionPane.showMessageDialog(null, "Record Inserted");
           this.setVisible(false); //after insertion is done, hide this and go back to NavigateRecords frame 'this' is optional
-          mainFrame.setVisible(true);
+          mainFrame.setVisible(true); 
               
              
       } //end try

@@ -33,7 +33,7 @@ public class UpdateBooks_InsertDel extends javax.swing.JFrame {
         int number =0;
         try {
             //Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/books", "sduser", "pass");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:8889/books", "sduser", "pass");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/books", "sduser", "pass");
             System.out.println("connection established at " + connection); 
 
             statement = connection.createStatement();
