@@ -20,7 +20,7 @@ public final class NavigateRecords extends javax.swing.JFrame {
 
               //create the connection object
               //ATTN: username and password must be changed depending on the settings on your database server
-              connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/books", "sd3user", "pass");
+              connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/books", "sduser", "pass");
 
               //create a statement object.
 	      //We will use this object to carry our query to the database

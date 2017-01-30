@@ -1,5 +1,14 @@
 package src;
 
+import java.sql.*;
+import com.sun.rowset.JdbcRowSetImpl;
+import java.sql.ResultSetMetaData;
+import java.text.DecimalFormat;
+import javax.swing.JOptionPane;
+import javax.swing.JFrame;
+import static javax.swing.JOptionPane.QUESTION_MESSAGE;
+import javax.swing.JTextArea;
+import javax.swing.JComboBox;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -7,16 +16,80 @@ package src;
 
 /**
  *
- * @author Alan.Ryan
+ * @author Vincent Lee
+ * skeleton Alan.Ryan
  */
-public class TestDB extends javax.swing.JFrame {
+public class Ex04_database extends javax.swing.JFrame {
     
       /**
-     * Creates new form TestDB
+     * Creates new form Ex04
      */
-    public TestDB() {
+    JdbcRowSetImpl rowSet = new JdbcRowSetImpl();
+    Connection connection;
+    
+    public Ex04_database() {
         initComponents();
        
+        try {
+            rowSet.setUrl("jdbc:mysql://localhost:3306/iseq"); // 3306 on LIT localost
+            rowSet.setUsername("root");
+            rowSet.setPassword("root");
+       
+            String initQuery = "SELECT * FROM prices";
+            rowSet.setCommand(initQuery);
+            rowSet.execute(); 
+            System.out.println("connection established at " + connection);
+            System.out.println("displaying from \'ISEQ\' Table\n");     
+            
+            //RowSetMetaData  metaData =  rowSet.getMetaData();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM authors");
+
+	      String results="";
+
+	      ResultSetMetaData metaData =  resultSet.getMetaData();
+
+	      int numberOfColumns = metaData.getColumnCount();
+
+	      for (int i =1; i < numberOfColumns; i++) {
+				results += metaData.getColumnName(i) + "\t";
+	      }
+
+	     results +="\n";
+
+	     while(resultSet.next()) {
+		for (int i=1;  i < numberOfColumns; i++){
+                    results +=resultSet.getObject(i) + "\t";
+                }//end for
+
+                results+= "\n";
+            }//end while
+
+	    statement.close();
+            connection.close();
+
+	    output.setText(results);
+
+            
+            
+            //load Agents
+            while(rowSet.next()) {
+                String agentID = rowSet.getString(1);  //gets the value from agentID column 
+                System.out.print("Agent added - ID : " + agentID + "\t");
+                String comboAgents = rowSet.getString(2); //gets the vale or name from agent's name column
+                System.out.print("Name : " + comboAgents + "\n");
+                
+                output.addItem(comboAgents);
+            }//end while
+            
+        }//end try
+        catch(SQLException sqlex) {
+            JOptionPane.showMessageDialog(null, sqlex.toString(), "Connection Error", JOptionPane.ERROR_MESSAGE);
+            System.err.println("SQLException: "+ sqlex.getMessage());
+            //sqlex.printStackTrace();
+            System.exit(0);
+        }
+        
     }
     
     /**
@@ -136,14 +209,15 @@ public class TestDB extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TestDB.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ex04_database.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TestDB.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ex04_database.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TestDB.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ex04_database.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TestDB.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Ex04_database.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /*
@@ -152,7 +226,7 @@ public class TestDB extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new TestDB().setVisible(true);
+                new Ex04_database().setVisible(true);
             }
         });
     }
