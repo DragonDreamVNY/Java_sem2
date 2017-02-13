@@ -1,0 +1,102 @@
+parsing text files - Tokeniser and Streams
+
+Token files
+1st , 2nd, 3rd, 4th
+James 32 60 30
+
+parsing the files into tokens
+reading and analysing tokens in the file
+
+where Stream lets us read/write to file.
+parsing
+Stream tokeniser
+//tokeniser is similar to split() method where it returns something like an array
+
+Token Types / constants:
+TT_WORD
+The token is a word.
+
+• TT_NUMBER
+The token is a number.
+
+• TT_EOL
+The end of the line has been read.
+
+• TT_EOF
+The end of the file has been read
+
+
+
+StreamTokenizer Variables
+
+• int ttype
+Contains the current token type, which matches one of the constants listed on the preceding slide.
+
+• double nval
+Contains the value of the current token if that token is a number.
+
+• String sval
+Contains a string that gives the characters of the current token if that token is a word.
+
+
+public int nextToken() throws IOException
+• Parses the next token from the input stream of this
+StreamTokenizer.
+• The type of the next token is returned in the
+ttype field.
+• If ttype == TT_WORD, the token is stored in sval.
+• If ttype == TT_NUMBER, the token is stored in nval.
+
+
+indat  StreamTokenizer[--->] Java   printWriter[---->] outdat
+
+EXAMPLE 4 notes:
+StreamTokenizer
+
+wrap FileReader object with SteamTokenizer to break information into Tokens.
+wrap FileWriter object with PrintWriter object
+
+in parsing files example:
+NB info isn't written in second file until Stream is closed: information will never be written
+
+======================
+
+EXERCISE 1
+weather Token exercise
+
+read
+parse contents of that file
+program tests for invalid file structure
+
+
+SoundDr@gonicaX
+
+
+print file to
+3 column headings
+county
+avg daily temp for each county (1 decimal place)
+freeze risk based on avg daily temp (<=0) Print YES otherwise Print NO
+
+program end -> second file should have output
+County 		Average Daily Temp 		Freeze Risk
+Clare			2						NO
+Cork			1.5						NO
+etc
+
+
+NB need to parse headers
+========================
+EXERCISE 2
+cars.dat
+- parse this file
+- print to second file 'projections.dat'
+locations, Average Price of Car at that location
+
+second file will have :
+Location 		AveragePrice
+DUBLIN			3,221,321.00
+Cork        3,242,234.20
+
+
+check StreamTokeniser doc

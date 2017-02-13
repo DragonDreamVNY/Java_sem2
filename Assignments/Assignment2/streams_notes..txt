@@ -1,0 +1,36 @@
+THE Process of writing a file/ saving it out called Serializer
+serializer
+
+processing of reading a file called externalizer
+externalizer
+
+Customer
+________
+cust#
+custName
+
+Serializer takes this object, wrap it up and write it out
+Externalizer takes the obejct and unwraps it an writes to a file.
+defining class has to implement one of the two objects serializer or externalizer
+
+import java.io.*;
+Person Class implements Serializable;{} this is in Java.io package
+
+Seerializable; is a marker interface, tells java there is a potential to want to write objects from this to the file.
+
+				------>
+		File 		java
+				<-------
+
+when saving objects to file you need an object Stream
+one for input
+one for output
+both talk to same file
+
+methods:
+writeObject()
+readObject()
+
+'private transient String thingy;'
+//mark transient if you don't want them written to file
+//side note, can't write threads to a file, so these are written 'transient' as well
