@@ -1,0 +1,17 @@
+- parse first file
+- second file has only Valid Credit Card Numbers.
+- generate random valid number for the invalid ones (keep track of these)
+- generate random with dates in the Future for invalid (past Expiry dates)
+04/2016 to 12/2022
+(in the format mm/yyyy)
+
+Hans Peter Luhn 'Mod-10 algorithm' /' Mod-10 formula' - validating credit cards
+Luhn test: see: https://repl.it/FewU/9
+
+
+first : reverse the number you are tryng to validate
+- valid MasterCards starts with the prefix of 51, 53 or 55
+- All valid Visa cards must start with the number 4.
+- All credit card numbers have 16 digits
+
+skip the tokens that don't "need" validation, then pass the CC into the validation method

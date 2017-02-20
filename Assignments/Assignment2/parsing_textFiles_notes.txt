@@ -69,7 +69,7 @@ parse contents of that file
 program tests for invalid file structure
 
 
-SoundDr@gonicaX
+	I
 
 
 print file to

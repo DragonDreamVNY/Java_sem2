@@ -1,8 +1,7 @@
-County	Average Daily Temp	Freeze Risk
-County	0.0	YES
-Clare	2.0	NO
-Cork	1.5	NO
-Kerry	2.5	NO
-Limerick	2.5	NO
-Tipperary	1.0	NO
-Waterford	0.0	YES
+County          Average Daily Temp   Freeze Risk    
+Clare           2.00                 NO             
+Cork            1.50                 NO             
+Kerry           2.50                 NO             
+Limerick        2.50                 NO             
+Tipperary       1.00                 NO             
+Waterford       0.00                 YES            

@@ -51,10 +51,14 @@ public class Parsing_ex01 {
             outStream = new PrintWriter(fileWriteStream);
             
             // Read first token
-            inStream.nextToken(); //read token
+            inStream.nextToken(); //read token County      		
+            inStream.nextToken(); //read token Max
+            inStream.nextToken(); //read token Min
+            inStream.nextToken(); //read token Condition
+            inStream.nextToken(); //read token first actual value from dataset I want...
             
             // output the Column Headers first before looping
-            outStream.println("County" + "\tAverage Daily Temp" + "\tFreeze Risk");
+            outStream.printf("%1$-15s %2$-20s %3$-15s", "County", "Average Daily Temp", "Freeze Risk");
             
             // Process a record //use loop for the series of records
             while (inStream.ttype != StreamTokenizer.TT_EOF) { //check type of the token and that it isn't End of File
@@ -89,7 +93,7 @@ public class Parsing_ex01 {
                 if (avgTemp <= 0){ freezeRisk = "YES"; } 
                 else { freezeRisk = "NO"; }
                 
-                outStream.println(county + "\t" + avgTemp + "\t" + freezeRisk); //PrintWriter object
+                outStream.printf("\n" + columnWidthFormatter(), county , avgTemp , freezeRisk); //PrintWriter object
 
                 inStream.nextToken(); // NB read next token!
               }// end while
@@ -113,4 +117,10 @@ public class Parsing_ex01 {
         }//end finally
    
     }// end main
+    
+    public static String columnWidthFormatter(){ //static methods, there are only one copy
+        String printFormatterHolder = "%1$-15s %2$-20.2f %3$-15s"; //three columns [ String, float, String ]
+        return printFormatterHolder;
+    }
+    
 }// end Class
