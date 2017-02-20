@@ -5,9 +5,11 @@
  */
 package lab01_currencyconverter;
 
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -86,6 +88,11 @@ public class CurrencyConvertFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        entryTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                entryTextFieldActionPerformed(evt);
+            }
+        });
         entryTextField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 entryTextFieldKeyTyped(evt);
@@ -266,22 +273,34 @@ public class CurrencyConvertFrame extends javax.swing.JFrame {
 
     private void convert_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convert_btnActionPerformed
         // Press CONVERT button
-        amount = Double.parseDouble( entryTextField.getText() );
-        canDollarsConverted = amount*1.2;
-        franEuroConverted = amount*0.73;
-        thaiBahtConverted = amount*30.99;
-        britPoundsConverted = amount*0.63;
-        setLabels();
         
+        try{
+            amount = Double.parseDouble( entryTextField.getText() );
+            canDollarsConverted = amount*1.02;
+            franEuroConverted = amount*0.73;
+            thaiBahtConverted = amount*30.99;
+            britPoundsConverted = amount*0.63;
+            setLabels();
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Input has to be a number : " + e.getMessage());
+        }
     }//GEN-LAST:event_convert_btnActionPerformed
 
     private void entryTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entryTextFieldKeyTyped
         // Event handler to make sure text entered is number
+        
         char enter = evt.getKeyChar();
         if(!(Character.isDigit(enter))){
             evt.consume();
+        
         }
+        
     }//GEN-LAST:event_entryTextFieldKeyTyped
+
+    private void entryTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entryTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_entryTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
