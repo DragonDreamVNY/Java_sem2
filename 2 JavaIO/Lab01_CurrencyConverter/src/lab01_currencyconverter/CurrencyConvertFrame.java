@@ -5,17 +5,50 @@
  */
 package lab01_currencyconverter;
 
+import java.text.NumberFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 /**
  *
  * @author DragonDream
  */
 public class CurrencyConvertFrame extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form CurrencyConvertFrame
      */
+    String language = "ENGLISH";
+    String country = "USA";
+    
+    Locale locale = new Locale(language, country); //create locale object
+    Locale usa = new Locale("en", "US"); //create USA locale object for 'amount'
+
+    Locale canada = new Locale("en", "CA"); //create Canada locale object
+    Locale france = new Locale("fr", "FR"); //create Thailand locale object for 'amount'
+    Locale thailand = new Locale("th", "TH"); //create Thailand locale object for 'amount'
+    Locale britain = new Locale("en", "EN"); //create great Britain locale object for 'amount'
+
+
+    
+    Locale locales[] = Calendar.getAvailableLocales(); //array of all locales
+    
+    double amount = 0; 
+    double canDollars = 0;
+    double franEuro = 0;
+    double thaiBaht = 0;
+    double britPounds = 0;
+    
+    double canDollarsConverted = 0;
+    double franEuroConverted = 0;
+    double thaiBahtConverted = 0;
+    double britPoundsConverted = 0;
+    
+    
+    
     public CurrencyConvertFrame() {
         initComponents();
+        setLabels();
     }
 
     /**
@@ -53,12 +86,23 @@ public class CurrencyConvertFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        entryTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                entryTextFieldKeyTyped(evt);
+            }
+        });
+
         enterHeaderLabel.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         enterHeaderLabel.setText("Enter Dollar Amount");
 
         usDollarsLabel.setText("US Dollars");
 
         convert_btn.setText("Convert");
+        convert_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                convert_btnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -220,6 +264,25 @@ public class CurrencyConvertFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void convert_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convert_btnActionPerformed
+        // Press CONVERT button
+        amount = Double.parseDouble( entryTextField.getText() );
+        canDollarsConverted = amount*1.2;
+        franEuroConverted = amount*0.73;
+        thaiBahtConverted = amount*30.99;
+        britPoundsConverted = amount*0.63;
+        setLabels();
+        
+    }//GEN-LAST:event_convert_btnActionPerformed
+
+    private void entryTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entryTextFieldKeyTyped
+        // Event handler to make sure text entered is number
+        char enter = evt.getKeyChar();
+        if(!(Character.isDigit(enter))){
+            evt.consume();
+        }
+    }//GEN-LAST:event_entryTextFieldKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -253,7 +316,25 @@ public class CurrencyConvertFrame extends javax.swing.JFrame {
                 new CurrencyConvertFrame().setVisible(true);
             }
         });
-    }
+    }//end main
+    
+    public void setLabels() {
+    	NumberFormat canadaCurrencyFormat = NumberFormat.getCurrencyInstance(canada);
+        NumberFormat franceCurrencyFormat = NumberFormat.getCurrencyInstance(france);
+        NumberFormat thailandCurrencyFormat = NumberFormat.getCurrencyInstance(thailand);
+        NumberFormat britainCurrencyFormat = NumberFormat.getCurrencyInstance(britain);
+
+    	canDollarConverted_TextField.setText( canadaCurrencyFormat.format(canDollarsConverted) );
+        euroFranceConverted_TextField.setText( franceCurrencyFormat.format(franEuroConverted) );
+        thatBahtConverted_TextField.setText( thailandCurrencyFormat.format(thaiBahtConverted) );
+        britishPoundsConverted_TextField.setText( britainCurrencyFormat.format(britPoundsConverted) );
+        
+
+    }// end setLabels
+    
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField britPoundsTextField;

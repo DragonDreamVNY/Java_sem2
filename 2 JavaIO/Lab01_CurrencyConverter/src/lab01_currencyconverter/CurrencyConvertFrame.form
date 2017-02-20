@@ -106,6 +106,9 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JTextField" name="entryTextField">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="entryTextFieldKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="enterHeaderLabel">
           <Properties>
@@ -126,6 +129,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Convert"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="convert_btnActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
