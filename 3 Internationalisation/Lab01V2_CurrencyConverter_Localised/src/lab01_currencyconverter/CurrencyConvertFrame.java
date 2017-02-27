@@ -65,6 +65,7 @@ public class CurrencyConvertFrame extends javax.swing.JFrame {
     public CurrencyConvertFrame() {
         initComponents();
         setLabels();
+        english_ButtonActionPerformed(null); //default seletion when application start
     }
     
     public void upDateStrings(){
@@ -378,7 +379,7 @@ public class CurrencyConvertFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_convert_btnActionPerformed
 
     private void entryTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entryTextFieldKeyTyped
-        // Event handler to make sure text entered is number
+        // Event handler to make sure text entered is number or from number key
         
         char enter = evt.getKeyChar();
         if( !(Character.isDigit(enter)) ){

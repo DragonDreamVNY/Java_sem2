@@ -1,0 +1,16 @@
+parsing files
+
+
+newstock.dat
+
+Brand, Model, Colour, MegaPixel, Price
+
+5 headers
+0 - 4 index
+
+if clauses:
+(prices > 450) { amount - (amount*0.15) } //15% discount
+( (prices >= 449) && (prices <= 300) ) { amount - (amount*0.12) } // 12% discount
+( (prices >= 299) && (prices <= 200) ) { amount - (amount*0.10) } // 10% discount
+( (prices >= 199) && (prices <= 100) ) { amount - (amount*0.08) } // 8% discount
+( prices < 99 ) { amount - (amount*0.05) } // 5% discount
