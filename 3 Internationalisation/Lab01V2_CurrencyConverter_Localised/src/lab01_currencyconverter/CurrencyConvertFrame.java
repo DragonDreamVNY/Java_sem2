@@ -27,7 +27,7 @@ public class CurrencyConvertFrame extends javax.swing.JFrame {
                             new Locale("fr"), //1
                             new Locale("pl"), //2
                             new Locale("it"), //3
-                            new Locale("es")//4
+                            new Locale("es") //4
     };
 
     
@@ -372,7 +372,8 @@ public class CurrencyConvertFrame extends javax.swing.JFrame {
             setLabels();
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Input has to be a number : " + e.getMessage());
+            JOptionPane.showMessageDialog(null, rb.getString("Error_Message"));
+            //JOptionPane.showMessageDialog(null, "Input has to be a number : " + e.getMessage());
         }
     }//GEN-LAST:event_convert_btnActionPerformed
 
