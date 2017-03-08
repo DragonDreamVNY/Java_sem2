@@ -18,6 +18,8 @@ public class TestRunnable {
     printA.start();
     printB.start();
   }
+  
+    
 //implement is an interface from API because no multiple inheritance in Java
 // ie Class Thingy extends JFrame implements Runnable
   // The thread class for printing a specified character

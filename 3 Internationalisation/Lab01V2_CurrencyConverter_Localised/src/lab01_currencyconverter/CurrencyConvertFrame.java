@@ -8,7 +8,7 @@ package lab01_currencyconverter;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.Calendar;
-import java.util.Locale;
+import java.util.Locale;¸
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
